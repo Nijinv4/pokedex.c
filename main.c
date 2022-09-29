@@ -22,7 +22,7 @@ void startup()
     printf("\t\t\t\t\t\t|\t\t  |\n");
     printf("\t\t\t\t\t\t|  VITOR GABRIEL  |\n");
     printf("\t\t\t\t\t\t|\t\t  |\n");
-    printf("\t\t\t\t\t\t|   JOÃO VITOR    |\n");
+    printf("\t\t\t\t\t\t|   JOÃƒO VITOR    |\n");
     printf("\t\t\t\t\t\t|\t\t  |\n");
     printf("\t\t\t\t\t\t|   LUAN JUNIO    |\n");
     printf("\t\t\t\t\t\t|\t\t  |\n");
@@ -146,19 +146,12 @@ void save_id(int cont)
 
     if(arquivoid!= NULL)
     {
-        system("cls");
-        printf("Salvando ID\n");
         fprintf(arquivoid, "%d", cont);
-        sleep(2);
-        system("cls");
-        printf("ID salvo\n");
     }
     else
-        printf("Não foi possivel salvar ID, tente novamente");
+        printf("NÃ£o foi possivel salvar ID, tente novamente");
 
     fclose(arquivoid);
-    system("pause");
-    system("cls");
 }
 
 void savepoke(pokemon *cad)
@@ -168,19 +161,12 @@ void savepoke(pokemon *cad)
 
     if(arquivoid!= NULL)
     {
-        system("cls");
-        printf("Salvando dados do pokemon\n");
         fwrite(cad, sizeof(pokemon), 1, arquivoid);
-        sleep(2);
-        system("cls");
-        printf("Pokemon salvo!!\n");
     }
     else
-        printf("Não foi possivel salvar pokemon, tente novamente");
+        printf("NÃ£o foi possivel salvar pokemon, tente novamente");
 
     fclose(arquivoid);
-    sleep(2);
-    system("cls");
 }
 
 void verif_id(int *verif)
@@ -208,18 +194,19 @@ void lista(pokemon *cad)
     arquivoid = fopen("SavePokemon.txt", "r");
     fseek(arquivoid, 0*sizeof(pokemon),SEEK_SET);
 
-    printf("REGISTRO POKEMON\n\n'");
+    printf("REGISTRO POKEMON\n\n");
     while(fread(cad, sizeof(pokemon), 1, arquivoid))
     {
-        printf("Nome  >%s\n", cad->nome);
-        printf("ID    >%d\n", cad->id);
-        printf("Vida  >%d\n", cad->vida);
-        printf("atk   >%d\n", cad->atk);
-        printf("def   >%d\n", cad->def);
-        printf("speed >%d\n", cad->speed);
-        printf("Satk  >%d\n", cad->Satk);
-        printf("Sdef  >%d\n", cad->Sdef);
-        printf("\n");
+        printf("|---------\n");
+        printf("|Nome  >%s\n", cad->nome);
+        printf("|ID    >%d\n", cad->id);
+        printf("|Vida  >%d\n", cad->vida);
+        printf("|atk   >%d\n", cad->atk);
+        printf("|def   >%d\n", cad->def);
+        printf("|speed >%d\n", cad->speed);
+        printf("|Satk  >%d\n", cad->Satk);
+        printf("|Sdef  >%d\n", cad->Sdef);
+        printf("|---------\n\n");
     }
     free(cad);
     fclose(arquivoid);
@@ -228,10 +215,15 @@ void lista(pokemon *cad)
 int main()
 {
     setlocale(LC_ALL,"");
-    //startup();// inicialização do programa
+    //startup();// inicializaÃ§Ã£o do programa
 
     pokemon cad; // variavel struc
     pokemon *pcad;
+
+    time_t segundos;
+    time(&segundos);
+    pcad = localtime(&segundos);
+
     int opcao;
     int cont=1;
 
@@ -242,12 +234,12 @@ int main()
         system("cls");
         srand(time(NULL));
         printf("____________MENU_____________\n");
-        printf("Opções|_____________________|\n");
+        printf("OpÃ§Ãµes|_____________________|\n");
         printf("  1   | Registro pokemon    |\n");
         printf("______|_____________________|\n");
         printf("  2   | Pokemons capturados |\n");
         printf("______|_____________________|");
-        printf("\n\t\t     Opção[ ]\b\b");
+        printf("\n\t\t     OpÃ§Ã£o[ ]\b\b");
         scanf("%d", &opcao);
         fflush(stdin);
 
@@ -268,22 +260,25 @@ int main()
             cad.Satk = rand()%100;
             cad.Sdef = rand()%100;
 
-            printf("\nNome: %s\n", cad.nome);
-            printf("ID : %d\n", cad.id);
-            printf("Vida: %d\n", cad.vida);
-            printf("atk: %d\n", cad.atk);
-            printf("def : %d\n", cad.def);
-            printf("speed: %d\n", cad.speed);
-            printf("Satk : %d\n", cad.Satk);
-            printf("Sdef : %d\n", cad.Sdef);
-
-            system("pause");
-
+            system("cls");
+            printf("DADOS DO POKEMON REGISTRADO\n");
+            printf("\t|---------\n");
+            printf("\t|Nome  >%s\n", cad.nome);
+            printf("\t|ID    >%d\n", cad.id);
+            printf("\t|Vida  >%d\n", cad.vida);
+            printf("\t|atk   >%d\n", cad.atk);
+            printf("\t|def   >%d\n", cad.def);
+            printf("\t|speed >%d\n", cad.speed);
+            printf("\t|Satk  >%d\n", cad.Satk);
+            printf("\t|Sdef  >%d\n", cad.Sdef);
+            printf("\t|---------\n\n");
 
             savepoke(&cad);
+
             cont ++;
             save_id(cont);
 
+            system("pause");
             break;
 
         case 2:
